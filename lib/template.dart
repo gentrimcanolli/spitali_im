@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(),
         body: Column(
-          children: [],
+          children: [
+            Text("home"),
+          ],
         ),
       ),
     );

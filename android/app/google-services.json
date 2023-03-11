@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "489505438292",
+    "project_id": "spitali-im",
+    "storage_bucket": "spitali-im.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489505438292:android:4a15741c2a209fb2ea4bc1",
+        "android_client_info": {
+          "package_name": "com.example.spitali_im"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "489505438292-sp64tb5siqp80ski71r7u0s5s9m6q03v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAThMCXM-oxbR3lE-QqkYwr6PjWwlfKLHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "489505438292-sp64tb5siqp80ski71r7u0s5s9m6q03v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
