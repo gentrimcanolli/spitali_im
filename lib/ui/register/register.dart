@@ -6,14 +6,14 @@ import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
 
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _surnameController = TextEditingController();
   TextEditingController _personalNoController = TextEditingController();
@@ -24,7 +24,8 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: secondaryAppBar("Regjistrohu", Icons.arrow_back_ios, context),
+      backgroundColor: Colors.white,
+      appBar: secondaryAppBar("Regjistrohu", context),
       body: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
@@ -53,7 +54,7 @@ class _RegisterState extends State<Register> {
             SizedBox(
               height: 20.0,
             ),
-            mainButton(
+            primaryButton(
               text: "Regjitrohu",
               onTap: () {
                 FirebaseAuth.instance
@@ -64,7 +65,7 @@ class _RegisterState extends State<Register> {
                       (value) => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (ctx) => Login(),
+                          builder: (ctx) => LoginScreen(),
                         ),
                       ),
                     )

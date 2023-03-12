@@ -11,3 +11,7 @@ Color mainGrayColor() {
 Color shadowColor() {
   return Color(0xff030303).withAlpha(70);
 }
+
+Color textColor() {
+  return Color(0xff030303);
+}

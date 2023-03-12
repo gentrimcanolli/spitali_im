@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:spitali_im/ui/appointments/appointment.dart';
+import 'package:spitali_im/ui/doctors/doctors.dart';
 import 'package:spitali_im/ui/home/home.dart';
 import 'package:spitali_im/ui/home/home2.dart';
 
@@ -20,9 +22,9 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const Home(),
-    const Home1(),
-    const Home2(),
+    const HomeScreen(),
+    const DoctorsScreen(),
+    const AppointmentScreen(),
     const Profile(),
   ];
 
@@ -33,7 +35,6 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   void _onItemTapped(int index) {
-    // _pageController.jumpToPage(i);
     _pageController.animateToPage(index,
         duration: Duration(milliseconds: 300), curve: Curves.easeOut);
   }
