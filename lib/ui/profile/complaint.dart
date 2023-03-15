@@ -15,7 +15,6 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: secondaryAppBar("Ankesë", context),
       body: Center(
         child: Padding(

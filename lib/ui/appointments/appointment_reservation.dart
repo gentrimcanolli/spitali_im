@@ -17,7 +17,6 @@ class _AppointmentReservationScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: secondaryAppBar("Rezervo Termin", context),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

@@ -16,7 +16,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: primaryAppBar("Terminet", false),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

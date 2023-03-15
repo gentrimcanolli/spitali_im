@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:spitali_im/constants/colors.dart';
 import 'package:spitali_im/constants/fonts.dart';
 import 'package:spitali_im/ui/home/department_details.dart';
-import 'package:spitali_im/ui/login/login.dart';
-import 'package:spitali_im/ui/register/register.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,17 +12,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // _navigateToScreen(Widget screen) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(builder: (ctx) => screen),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: primaryAppBar("Ballina", false),
       body: Center(
         child: Column(
@@ -41,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: mainBlueColor(),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30.0,
             ),
             Expanded(
@@ -53,63 +43,101 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DepartmentDetailsScreen(),
-                            ),
-                          );
+                          navigateToDepartment(
+                              "kardiologji", "images/heart_icon.png");
                         },
                         child: departmentCard(
                           imagePath: "images/heart_icon.png",
                           text: "Kardiologji",
                         ),
                       ),
-                      departmentCard(
-                        imagePath: "images/lungs_icon.png",
-                        text: "Pulmologji",
+                      GestureDetector(
+                        onTap: () {
+                          navigateToDepartment(
+                              "pulmologji", "images/lungs_icon.png");
+                        },
+                        child: departmentCard(
+                          imagePath: "images/lungs_icon.png",
+                          text: "Pulmologji",
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      departmentCard(
-                        imagePath: "images/brain_icon.png",
-                        text: "Neurologji",
+                      GestureDetector(
+                        onTap: () {
+                          navigateToDepartment(
+                              "neurologji", "images/brain_icon.png");
+                        },
+                        child: departmentCard(
+                          imagePath: "images/brain_icon.png",
+                          text: "Neurologji",
+                        ),
                       ),
-                      departmentCard(
-                        imagePath: "images/kidney_icon.png",
-                        text: "Nefrologji",
+                      GestureDetector(
+                        onTap: () {
+                          navigateToDepartment(
+                              "nefrologji", "images/kidney_icon.png");
+                        },
+                        child: departmentCard(
+                          imagePath: "images/kidney_icon.png",
+                          text: "Nefrologji",
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      departmentCard(
-                        imagePath: "images/brain_icon.png",
-                        text: "Neurologji",
+                      GestureDetector(
+                        onTap: () {
+                          navigateToDepartment(
+                              "neurologji", "images/bran_icon.png");
+                        },
+                        child: departmentCard(
+                          imagePath: "images/brain_icon.png",
+                          text: "Neurologji",
+                        ),
                       ),
-                      departmentCard(
-                        imagePath: "images/kidney_icon.png",
-                        text: "Nefrologji",
+                      GestureDetector(
+                        onTap: () {
+                          navigateToDepartment(
+                              "nefrologji", "images/kidney_icon.png");
+                        },
+                        child: departmentCard(
+                          imagePath: "images/kidney_icon.png",
+                          text: "Nefrologji",
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20.0,
                   ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  navigateToDepartment(String departmentId, String imagePath) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DepartmentDetailsScreen(
+          departmentId: departmentId,
+          imagePath: imagePath,
         ),
       ),
     );

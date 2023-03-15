@@ -1,9 +1,17 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:spitali_im/constants/colors.dart';
+import 'package:spitali_im/data/models/db_helper.dart';
+import 'package:spitali_im/data/models/departments_model.dart';
+import 'package:spitali_im/ui/home/department_doctors.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
 class DepartmentDetailsScreen extends StatefulWidget {
-  const DepartmentDetailsScreen({Key? key}) : super(key: key);
+  String departmentId = '';
+  String imagePath;
+
+  DepartmentDetailsScreen(
+      {required this.departmentId, required this.imagePath});
 
   @override
   State<DepartmentDetailsScreen> createState() =>
@@ -11,10 +19,11 @@ class DepartmentDetailsScreen extends StatefulWidget {
 }
 
 class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
+  late DepartmentsModel departmentsModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: secondaryAppBar("Departamentet", context),
       body: Center(
         child: Padding(
@@ -22,49 +31,74 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
           child: Column(
             children: [
               Image.asset(
-                "images/heart_icon.png",
+                widget.imagePath,
                 width: 150,
                 height: 150,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              SizedBox(
-                height: 400.0,
-                child: Card(
-                  shadowColor: shadowColor(),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 30.0, horizontal: 30.0),
-                    child: Column(
-                      children: [
-                        primaryText(
-                            text: "Kardiologji",
-                            fontSize: 23.0,
-                            fontColor: mainBlueColor(),
-                            isBold: true),
-                        SizedBox(
-                          height: 20.0,
+              FutureBuilder(
+                future: DBHelper.getDepartmentDetails(widget.departmentId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    departmentsModel = snapshot.data!;
+                    return SizedBox(
+                      height: 400.0,
+                      child: Card(
+                        shadowColor: shadowColor(),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        primaryText(
-                            text:
-                                "Kardiologjia është degë e mjekësisë që merret me diagnostikimin, trajtimin dhe parandalimin e sëmundjeve të zemrës dhe të sistemit të qarkullimit të gjakut. Kardiologët janë specialistë të trajtimit të sëmundjeve të zemrës, duke përfshirë infarktin e miokardit, aritmive, insuficiencën kardiake, si dhe sëmundjet e enëve të gjakut që furnizojnë zemrën me gjak.",
-                            fontSize: 22.0,
-                            fontColor: textColor(),
-                            isBold: false),
-                      ],
-                    ),
-                  ),
-                ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 30.0,
+                            top: 30.0,
+                            right: 30.0,
+                            bottom: 10.0,
+                          ),
+                          child: Column(
+                            children: [
+                              primaryText(
+                                  text: departmentsModel.title,
+                                  fontSize: 23.0,
+                                  fontColor: mainBlueColor(),
+                                  isBold: true),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              primaryText(
+                                  text: departmentsModel.description,
+                                  fontSize: 22.0,
+                                  fontColor: textColor(),
+                                  isBold: false),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20.0,
               ),
-              primaryButton(text: "Doktorët", onTap: () {}),
+              primaryButton(
+                  text: "Doktorët",
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => DepartmentDoctorsScreen(
+                          departmentId: departmentsModel.title,
+                        ),
+                      ),
+                    );
+                  }),
             ],
           ),
         ),

@@ -4,7 +4,15 @@ import 'package:spitali_im/main.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
-  const DoctorDetailsScreen({Key? key}) : super(key: key);
+  String name;
+  String department;
+  String description;
+
+  DoctorDetailsScreen({
+    required this.name,
+    required this.department,
+    required this.description,
+  });
 
   @override
   State<DoctorDetailsScreen> createState() => _DoctorDetailsScreenState();
@@ -14,18 +22,17 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: secondaryAppBar("Dr. Gentrim Canolli", context),
+      appBar: secondaryAppBar("Dr. ${widget.name}", context),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               doctorDetailsCard(
-                  name: "Dr. Gentrim Canolli",
-                  department: "Kardiologji",
-                  details:
-                      "Kardiolog me përvojë në diagnostikimin dhe trajtimin e sëmundjeve të zemrës dhe të sistemit të qarkullimit të gjakut. Duke u përqendruar në pacientët e mi, unë punoj për të siguruar që ata të marrin trajtimin më të mirë dhe të personalizuar për nevojat e tyre."),
+                name: "Dr. ${widget.name}",
+                department: widget.department,
+                details: widget.description,
+              ),
               const SizedBox(
                 height: 20.0,
               ),

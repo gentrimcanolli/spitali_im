@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spitali_im/ui/appointments/appointment.dart';
 import 'package:spitali_im/ui/doctors/doctors.dart';
 import 'package:spitali_im/ui/home/home.dart';
-import 'package:spitali_im/ui/home/home2.dart';
-
 import '../../constants/colors.dart';
-import '../home/home3.dart';
 import '../profile/profile.dart';
-import '../reusable_widgets/reusable_widgets.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({Key? key}) : super(key: key);
@@ -17,13 +13,13 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
 
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
     const HomeScreen(),
-    const DoctorsScreen(),
+    DoctorsScreen(),
     const AppointmentScreen(),
     const Profile(),
   ];
@@ -36,7 +32,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
   void _onItemTapped(int index) {
     _pageController.animateToPage(index,
-        duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+        duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
   }
 
   @override
@@ -53,7 +49,7 @@ class _MainNavigationState extends State<MainNavigation> {
         type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
         backgroundColor: Colors.white,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.window,

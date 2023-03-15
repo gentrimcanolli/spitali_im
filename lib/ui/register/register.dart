@@ -24,7 +24,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: secondaryAppBar("Regjistrohu", context),
       body: Padding(
         padding: const EdgeInsets.all(30.0),

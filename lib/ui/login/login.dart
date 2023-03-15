@@ -19,7 +19,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: primaryAppBar("Kyçu", false),
       body: Padding(
         padding: const EdgeInsets.only(left: 30.0, top: 50.0, right: 30.0),
