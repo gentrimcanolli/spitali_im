@@ -28,31 +28,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SplashScreen(),
-        // body: LoginScreen(),
-        // body: MainNavigation(
-        //   personalNo: "a",
-        // ),
-        // body: Center(
-        //   child: ElevatedButton(
-        //     onPressed: () {
-        //       addUser();
-        //     },
-        //     child: Text("Add"),
-        //   ),
-        // ),
       ),
     );
   }
+ }
 
-  addUser() {
-    for (int i = 25; i <= 30; i++) {
-      fsInstance.collection("doctors").doc(i.toString()).set({
-        'name': "Emanuel Nov",
-        "available": true,
-        "department": "Nefrologji",
-        "description":
-            "Nefrolog me përvojë në diagnostikimin dhe trajtimin e sëmundjeve të sistemit të veshkave. Kam njohuri të thella të fiziologjisë së sistemit të veshkave dhe përdor teknika të ndryshme, si analiza e urinës dhe ultratingujt, për të ndihmuar në diagnostikimin e sëmundjeve."
-      });
-    }
-  }
-}
