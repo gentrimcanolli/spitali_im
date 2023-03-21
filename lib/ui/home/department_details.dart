@@ -1,8 +1,8 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:spitali_im/constants/colors.dart';
-import 'package:spitali_im/data/models/db_helper.dart';
-import 'package:spitali_im/data/models/departments_model.dart';
+import 'package:spitali_im/data/database/db_helper.dart';
+import 'package:spitali_im/data/models/department_model.dart';
 import 'package:spitali_im/ui/home/department_doctors.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
@@ -19,8 +19,8 @@ class DepartmentDetailsScreen extends StatefulWidget {
 }
 
 class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
-  DatabaseReference databaseReference = FirebaseDatabase.instance.ref();
-  late DepartmentsModel departmentsModel;
+  DBHelper dbHelper = DBHelper();
+  late DepartmentModel departmentsModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                 height: 20.0,
               ),
               FutureBuilder(
-                future: DBHelper.getDepartmentDetails(widget.departmentId),
+                future: dbHelper.getDepartmentDetails(widget.departmentId),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done &&
                       snapshot.hasData) {
@@ -80,7 +80,9 @@ class _DepartmentDetailsScreenState extends State<DepartmentDetailsScreen> {
                       ),
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
                   }
                 },
               ),

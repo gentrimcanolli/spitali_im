@@ -6,7 +6,11 @@ import '../../constants/colors.dart';
 import '../profile/profile.dart';
 
 class MainNavigation extends StatefulWidget {
-  const MainNavigation({Key? key}) : super(key: key);
+  String personalNo;
+
+  MainNavigation({
+    required this.personalNo,
+  });
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -14,15 +18,23 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   final PageController _pageController = PageController();
-
   int _selectedIndex = 0;
+  late List<Widget> _screens = [];
 
-  final List<Widget> _screens = [
-    const HomeScreen(),
-    DoctorsScreen(),
-    const AppointmentScreen(),
-    const Profile(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _screens = [
+      const HomeScreen(),
+      DoctorsScreen(),
+      AppointmentScreen(
+        patientId: widget.personalNo,
+      ),
+      ProfileScreen(
+        personalNo: widget.personalNo,
+      ),
+    ];
+  }
 
   void _onPageChanged(int index) {
     setState(() {

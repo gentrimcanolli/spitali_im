@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:spitali_im/ui/doctors/doctor_details.dart';
-import '../../data/models/db_helper.dart';
+import '../../data/database/db_helper.dart';
 
-import '../../data/models/doctors_model.dart';
+import '../../data/models/doctor_model.dart';
 import '../reusable_widgets/reusable_widgets.dart';
 
 class DoctorsScreen extends StatefulWidget {
   String departmentId;
-
   DoctorsScreen({this.departmentId = ''});
 
   @override
@@ -15,20 +14,21 @@ class DoctorsScreen extends StatefulWidget {
 }
 
 class _DoctorsScreenState extends State<DoctorsScreen> {
+  DBHelper dbHelper = DBHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Doktorët", false),
+      appBar: primaryAppBar("Doktorët", false, context),
       body: FutureBuilder(
-        future: DBHelper.getDoctorList(),
+        future: dbHelper.getDoctorList(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
-            List<DoctorsModel> doctorList = snapshot.data!;
+            List<DoctorModel> doctorList = snapshot.data!;
             return ListView.builder(
               itemCount: doctorList.length,
               itemBuilder: (context, int index) {
-                DoctorsModel doctorsModel = doctorList[index];
+                DoctorModel doctorsModel = doctorList[index];
                 return Center(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -62,7 +62,9 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

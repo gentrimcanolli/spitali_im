@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:spitali_im/ui/login/login.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:spitali_im/data/database/db_helper.dart';
+import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
-
-import '../../constants/colors.dart';
-import '../../constants/fonts.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,12 +12,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _surnameController = TextEditingController();
-  TextEditingController _personalNoController = TextEditingController();
-  TextEditingController _telNoController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  DBHelper dbHelper = DBHelper();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _personalNoController = TextEditingController();
+  final TextEditingController _telNoController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,47 +30,72 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Column(
           children: [
             primaryTextField("Emri", false, _nameController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryTextField("Mbiemri", false, _surnameController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryTextField("Nr. personal", false, _personalNoController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryTextField("Nr. i telefonit", false, _telNoController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryTextField("Email", false, _emailController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryTextField("Fjalëkalimi", true, _passwordController),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             primaryButton(
-              text: "Regjitrohu",
-              onTap: () {
-                FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: _personalNoController.text,
-                        password: _passwordController.text)
-                    .then(
-                      (value) => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (ctx) => LoginScreen(),
-                        ),
-                      ),
-                    )
-                    .onError((error, stackTrace) {
-                  print("Error: Register");
-                });
+              text: "Regjistrohu",
+              onTap: () async {
+                bool result = await dbHelper.userExists(
+                    _personalNoController.text.toString(),
+                    _emailController.text.toString());
+
+                if (!result) {
+                  UserModel userModel = UserModel(
+                    name: _nameController.text.toString(),
+                    surname: _surnameController.text.toString(),
+                    personalNo: _personalNoController.text.toString(),
+                    telephoneNo: _telNoController.text.toString(),
+                    email: _emailController.text.toString(),
+                    password: _passwordController.text.toString(),
+                  );
+
+                  dbHelper.registerUser(userModel);
+
+                  showAlert(
+                    context: context,
+                    type: QuickAlertType.success,
+                    message: "You have successfully registered",
+                    confirmType: false,
+                  );
+                } else if (_nameController.text.toString().isEmpty ||
+                    _surnameController.text.toString().isEmpty ||
+                    _personalNoController.text.toString().isEmpty ||
+                    _telNoController.text.toString().isEmpty ||
+                    _emailController.text.toString().isEmpty ||
+                    _passwordController.text.toString().isEmpty) {
+                  showAlert(
+                      context: context,
+                      type: QuickAlertType.error,
+                      message: "All field are required!",
+                      confirmType: false);
+                } else {
+                  showAlert(
+                      context: context,
+                      type: QuickAlertType.error,
+                      message: "User already exists",
+                      confirmType: false);
+                }
               },
             ),
           ],

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:spitali_im/ui/login/login.dart';
 import 'package:spitali_im/ui/navigation/nav.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
@@ -25,23 +26,31 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: MainNavigation(),
+        // body: LoginScreen(),
+        body: MainNavigation(
+          personalNo: "a",
+        ),
         // body: Center(
         //   child: ElevatedButton(
         //     onPressed: () {
-        //       // for (int i = 21; i <= 26; i++) {
-        //       fsInstance.collection("doctors").doc("3").set({
-        //         'name': "Gentrim Canolli",
-        //         "available": true,
-        //         "department": "Kardiologji",
-        //         "description": "Nefrolog i forte",
-        //       });
+        //       addUser();
         //     },
-        //     // },
         //     child: Text("Add"),
         //   ),
         // ),
       ),
     );
+  }
+
+  addUser() {
+    for (int i = 25; i <= 30; i++) {
+      fsInstance.collection("doctors").doc(i.toString()).set({
+        'name': "Emanuel Nov",
+        "available": true,
+        "department": "Nefrologji",
+        "description":
+            "Nefrolog me përvojë në diagnostikimin dhe trajtimin e sëmundjeve të sistemit të veshkave. Kam njohuri të thella të fiziologjisë së sistemit të veshkave dhe përdor teknika të ndryshme, si analiza e urinës dhe ultratingujt, për të ndihmuar në diagnostikimin e sëmundjeve."
+      });
+    }
   }
 }

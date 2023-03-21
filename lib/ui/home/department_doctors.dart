@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:spitali_im/data/models/db_helper.dart';
-import 'package:spitali_im/data/models/doctors_model.dart';
+import 'package:spitali_im/data/database/db_helper.dart';
+import 'package:spitali_im/data/models/doctor_model.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import 'package:spitali_im/ui/doctors/doctor_details.dart';
 
@@ -14,20 +14,21 @@ class DepartmentDoctorsScreen extends StatefulWidget {
 }
 
 class _DepartmentDoctorsScreenState extends State<DepartmentDoctorsScreen> {
+  DBHelper dbHelper = DBHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: secondaryAppBar("Doktorët", context),
       body: FutureBuilder(
-        future: DBHelper.getDepartmentDoctorList(widget.departmentId),
+        future: dbHelper.getDepartmentDoctorList(widget.departmentId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
-            List<DoctorsModel> doctorList = snapshot.data!;
+            List<DoctorModel> doctorList = snapshot.data!;
             return ListView.builder(
               itemCount: doctorList.length,
               itemBuilder: (context, int index) {
-                DoctorsModel doctorsModel = doctorList[index];
+                DoctorModel doctorsModel = doctorList[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20.0,
@@ -53,14 +54,16 @@ class _DepartmentDoctorsScreenState extends State<DepartmentDoctorsScreen> {
                           department: doctorsModel.department,
                           details: "",
                         ),
-                      )
+                      ),
                     ],
                   ),
                 );
               },
             );
           } else {
-            return CircularProgressIndicator();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       ),

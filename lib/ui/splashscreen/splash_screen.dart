@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:spitali_im/ui/navigation/nav.dart';
+import 'package:spitali_im/ui/login/login.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void _navigateHome() async {
     await Future.delayed(Duration(milliseconds: 3000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => MainNavigation()));
+        context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   @override

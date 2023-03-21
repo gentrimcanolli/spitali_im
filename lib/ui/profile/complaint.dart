@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 import '../reusable_widgets/reusable_widgets.dart';
 
 class ComplaintScreen extends StatefulWidget {
-  const ComplaintScreen({Key? key}) : super(key: key);
+  String name;
+  String personalNo;
+  String email;
+
+  ComplaintScreen({
+    required this.name,
+    required this.personalNo,
+    required this.email,
+  });
 
   @override
   State<ComplaintScreen> createState() => _ComplaintScreenState();
@@ -11,6 +20,7 @@ class ComplaintScreen extends StatefulWidget {
 
 class _ComplaintScreenState extends State<ComplaintScreen> {
   TextEditingController controller = TextEditingController();
+  final TextEditingController _messageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +32,53 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
           child: Column(
             children: [
               profileTextView(
-                  text: "Emri", isPassword: false, controller: controller),
+                text: "Emri",
+                isPassword: false,
+                controller: controller,
+                isEnabled: false,
+                labelText: widget.name,
+              ),
               profileTextView(
-                  text: "Nr. personal",
-                  isPassword: false,
-                  controller: controller),
+                text: "Nr. personal",
+                isPassword: false,
+                controller: controller,
+                isEnabled: false,
+                labelText: widget.personalNo,
+              ),
               profileTextView(
-                  text: "Email", isPassword: false, controller: controller),
-              messageTextView(messageBoxHeight: 200.0, controller: controller),
-              primaryButton(text: "Dërgo", onTap: () {}),
+                text: "Email",
+                isPassword: false,
+                controller: controller,
+                isEnabled: false,
+                labelText: widget.email,
+              ),
+              messageTextView(
+                  messageBoxHeight: 200.0, controller: _messageController),
+              primaryButton(
+                text: "Dërgo",
+                onTap: () async {
+                  sendEmail(_messageController.text.toString());
+                },
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future sendEmail(String body) async {
+    try {
+      await FlutterEmailSender.send(
+        Email(
+          subject: "Ankesa - Spital Im",
+          recipients: ['gentrim14@gmail.com'],
+          body: body,
+          isHTML: false,
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

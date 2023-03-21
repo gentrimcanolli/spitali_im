@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/constants/colors.dart';
+import 'package:spitali_im/ui/login/login.dart';
 
 import '../../constants/fonts.dart';
 
-AppBar primaryAppBar(String title, bool hasAction) {
+AppBar primaryAppBar(String title, bool hasAction, BuildContext context) {
   return AppBar(
     toolbarHeight: 70.0,
     backgroundColor: Colors.white,
-    actions: hasAction
+    actions: (hasAction)
         ? [
             IconButton(
               icon: Icon(
@@ -16,7 +19,13 @@ AppBar primaryAppBar(String title, bool hasAction) {
                 color: mainBlueColor(),
                 size: 30.0,
               ),
-              onPressed: () {},
+              onPressed: () {
+                showAlert(
+                    context: context,
+                    type: QuickAlertType.confirm,
+                    message: "Are you sure you want to logout?",
+                    confirmType: true);
+              },
             ),
           ]
         : null,
@@ -181,6 +190,9 @@ Column profileTextView({
   required String text,
   required bool isPassword,
   required TextEditingController controller,
+  required bool isEnabled,
+  String labelText = '',
+  String textController = '',
 }) {
   return Column(
     children: [
@@ -201,10 +213,11 @@ Column profileTextView({
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
         child: TextField(
+          enabled: (isEnabled) ? true : false,
           obscureText: isPassword ? true : false,
           controller: controller,
           decoration: InputDecoration(
-            fillColor: Colors.white,
+            hintText: labelText,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
               borderSide: const BorderSide(color: Colors.white, width: 0.0),
@@ -333,7 +346,7 @@ Card doctorDetailsCard(
   );
 }
 
-Row workingTime({required String weekDayName}) {
+Row workingTime({required String weekDayName, String time = "09:00 - 22:00"}) {
   return Row(
     children: [
       Image.asset(
@@ -353,7 +366,7 @@ Row workingTime({required String weekDayName}) {
               fontColor: mainBlueColor(),
               isBold: false),
           primaryText(
-              text: "09:00 - 22:00",
+              text: time,
               fontSize: 13.0,
               fontColor: mainGrayColor(),
               isBold: false),
@@ -379,5 +392,37 @@ showDescription(String details) {
     );
   } else {
     return const SizedBox();
+  }
+}
+
+showAlert({
+  required BuildContext context,
+  required QuickAlertType type,
+  required String message,
+  required bool confirmType,
+}) {
+  if (confirmType) {
+    QuickAlert.show(
+      context: context,
+      type: type,
+      text: message,
+      confirmBtnText: "Yes",
+      cancelBtnText: "Cancel",
+      confirmBtnColor: mainBlueColor(),
+      onConfirmBtnTap: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => const LoginScreen(),
+          ),
+        );
+      },
+    );
+  } else {
+    QuickAlert.show(
+      context: context,
+      type: type,
+      text: message,
+    );
   }
 }
