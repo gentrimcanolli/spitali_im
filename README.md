@@ -8,6 +8,7 @@
 -	Check upcoming appointments
 -	Cancel appointments
 -	Send complaint messages 
+- Update profile
 ## Installation
 To run the app, you will need to have Flutter installed on your machine. Clone the repository, navigate to the project directory, and run *'flutter run'*. 
 ## Dependencies
