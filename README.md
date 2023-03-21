@@ -1,5 +1,8 @@
 # Spitali im
 *‘Spitali im’* is a mobile application build with Dart and Flutter that is used for hospital management. The app uses Firebase for backend services to store and retrieve data.
+## Design and Documentation
+Desing can be found in the *mockups* directory, and documentation can be found in the *documents* directory.
+
 ## Features 
 -	User login and registration
 -	Check departments list
