@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:spitali_im/constants/colors.dart';
 import 'package:spitali_im/main.dart';
+import 'package:spitali_im/ui/appointments/appointment_reservation.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
 class DoctorDetailsScreen extends StatefulWidget {
@@ -101,7 +102,14 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
               const SizedBox(height: 20.0),
               primaryButton(
                 text: "Rezervo Termin",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => const AppointmentReservationScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
