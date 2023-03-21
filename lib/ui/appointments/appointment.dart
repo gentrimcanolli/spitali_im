@@ -138,7 +138,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                         type: QuickAlertType.confirm,
                                         title: "Anulo terminin?",
                                         text:
-                                            "A deshironi te anuloni kete termin",
+                                            "A dëshironi të anuloni këtë termin",
                                         confirmBtnText: "Po",
                                         cancelBtnText: "Jo",
                                         onConfirmBtnTap: () {
@@ -164,7 +164,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               } else {
                 return Center(
                   child: primaryText(
-                    text: "Ju nuk keni asnje termin ",
+                    text: "Ju nuk keni asnjë termin ",
                     fontSize: 20.0,
                     fontColor: mainBlueColor(),
                     isBold: false,

@@ -197,7 +197,7 @@ class _AppointmentReservationScreenState
                     context: context,
                     type: QuickAlertType.confirm,
                     title: "Termin",
-                    text: "A jeni te sigurt qe deshironi te rezervoni termin?",
+                    text: "A jeni të sigurt që dëshironi të rezervoni termin?",
                     confirmBtnText: "Po",
                     cancelBtnText: "Anulo",
                     onConfirmBtnTap: () {

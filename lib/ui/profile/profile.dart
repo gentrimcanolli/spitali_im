@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/profile/complaint.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
@@ -68,13 +69,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       primaryButton(
                         text: "Përditëso profilin",
-                        onTap: () async {
-                          await profileHelper.changePassword(
-                            userModel.personalNo,
-                            UserModel.generateSaltedHashPassword(
-                              _passwordController.text.toString(),
-                            ),
-                          );
+                        onTap: () {
+                          QuickAlert.show(
+                              context: context,
+                              title: "Përditëso profilin",
+                              text: "A dëshironi të përditësoni profilin?",
+                              type: QuickAlertType.confirm,
+                              confirmBtnText: "Po",
+                              cancelBtnText: "Jo",
+                              onConfirmBtnTap: () async {
+                                await profileHelper
+                                    .changePassword(
+                                  userModel.personalNo,
+                                  UserModel.generateSaltedHashPassword(
+                                    _passwordController.text.toString(),
+                                  ),
+                                )
+                                    .then((value) {
+                                  Navigator.pop(context);
+                                  QuickAlert.show(
+                                    context: context,
+                                    type: QuickAlertType.success,
+                                    title: "Përditësimi i profilit",
+                                    text:
+                                        "Keni ndryshuar me sukses fjalëkalimin!",
+                                  );
+                                });
+                              });
                         },
                       ),
                       const SizedBox(height: 20.0),

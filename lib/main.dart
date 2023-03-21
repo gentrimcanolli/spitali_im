@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:spitali_im/ui/login/login.dart';
-import 'package:spitali_im/ui/navigation/nav.dart';
-import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import 'package:spitali_im/ui/splashscreen/splash_screen.dart';
 
 Future main() async {
@@ -31,5 +28,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
- }
-
+}
