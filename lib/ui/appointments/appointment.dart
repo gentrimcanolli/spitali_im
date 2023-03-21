@@ -4,7 +4,7 @@ import 'package:spitali_im/ui/appointments/appointment_reservation.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
-import '../../data/database/db_helper.dart';
+import '../../data/database/appointment_helper.dart';
 import '../../data/models/appointment_model.dart';
 
 class AppointmentScreen extends StatefulWidget {
@@ -19,7 +19,8 @@ class AppointmentScreen extends StatefulWidget {
 }
 
 class _AppointmentScreenState extends State<AppointmentScreen> {
-  DBHelper dbHelper = DBHelper();
+  AppointmentHelper appointmentHelper = AppointmentHelper();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +30,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (ctx) => AppointmentReservationScreen(),
+              builder: (ctx) => const AppointmentReservationScreen(),
             ),
           );
         },
@@ -42,7 +43,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: FutureBuilder(
-            future: dbHelper.getAppointments(widget.patientId),
+            future: appointmentHelper.getAppointments(widget.patientId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -141,7 +142,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                         confirmBtnText: "Po",
                                         cancelBtnText: "Jo",
                                         onConfirmBtnTap: () {
-                                          dbHelper
+                                          appointmentHelper
                                               .discardAppointment(
                                                   appointmentList,
                                                   appointmentList[index].time)

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
-import 'package:spitali_im/data/database/db_helper.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+import '../../data/database/register_helper.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  DBHelper dbHelper = DBHelper();
+  RegisterHelper registerHelper = RegisterHelper();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
@@ -56,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             primaryButton(
               text: "Regjistrohu",
               onTap: () async {
-                bool result = await dbHelper.userExists(
+                bool result = await registerHelper.userExists(
                     _personalNoController.text.toString(),
                     _emailController.text.toString());
 
@@ -70,31 +71,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     password: _passwordController.text.toString(),
                   );
 
-                  dbHelper.registerUser(userModel);
+                  registerHelper.registerUser(userModel);
 
-                  showAlert(
-                    context: context,
-                    type: QuickAlertType.success,
-                    message: "You have successfully registered",
-                    confirmType: false,
-                  );
+                  QuickAlert.show(
+                      context: context,
+                      title: 'Regjistrohu',
+                      text: 'Jeni regjistruar me sukses',
+                      type: QuickAlertType.success,
+                      confirmBtnText: "Në rregull");
                 } else if (_nameController.text.toString().isEmpty ||
                     _surnameController.text.toString().isEmpty ||
                     _personalNoController.text.toString().isEmpty ||
                     _telNoController.text.toString().isEmpty ||
                     _emailController.text.toString().isEmpty ||
                     _passwordController.text.toString().isEmpty) {
-                  showAlert(
-                      context: context,
-                      type: QuickAlertType.error,
-                      message: "All field are required!",
-                      confirmType: false);
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.error,
+                    text: "Ju lutem plotësoni të gjitha të dhënat!",
+                    title: 'Regjistrohu',
+                    confirmBtnText: "Në rregull",
+                  );
                 } else {
-                  showAlert(
-                      context: context,
-                      type: QuickAlertType.error,
-                      message: "User already exists",
-                      confirmType: false);
+                  QuickAlert.show(
+                    context: context,
+                    type: QuickAlertType.error,
+                    title: 'Regjistrohu',
+                    text: "Ky përdorues ekziston!",
+                    confirmBtnText: "Në rregull",
+                  );
                 }
               },
             ),

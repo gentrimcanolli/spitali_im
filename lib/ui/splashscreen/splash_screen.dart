@@ -25,20 +25,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffd2d6d9),
+      backgroundColor: const Color(0xffe6ebeb),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "images/app_logo.png",
+              "images/spitali_im_logo.png",
               width: 250,
               height: 250,
             ),
             primaryText(
                 text: "Spitali im",
                 fontSize: 25.0,
-                fontColor: Color(0xff2d5e6c),
+                fontColor: const Color(0xff2d5e6c),
                 isBold: true)
           ],
         ),

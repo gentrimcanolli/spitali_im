@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/constants/colors.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
-
-import '../../data/database/db_helper.dart';
+import '../../data/database/appointment_helper.dart';
 import '../../data/models/appointment_model.dart';
 
 class AppointmentReservationScreen extends StatefulWidget {
@@ -21,10 +20,12 @@ class _AppointmentReservationScreenState
   final TextEditingController _phoneNoController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
-  DateTime? dateTime;
-  DBHelper dbHelper = DBHelper();
+
+  AppointmentHelper appointmentHelper = AppointmentHelper();
+
   String departmentId = "Kardiologji";
   String doctorId = "Gentrim Canolli";
+  DateTime? dateTime;
 
   selectDate() {
     showDatePicker(
@@ -200,7 +201,7 @@ class _AppointmentReservationScreenState
                     confirmBtnText: "Po",
                     cancelBtnText: "Anulo",
                     onConfirmBtnTap: () {
-                      dbHelper
+                      appointmentHelper
                           .bookAppointment(
                         AppointmentModel(
                           date: dateTime.toString().substring(0, 10),

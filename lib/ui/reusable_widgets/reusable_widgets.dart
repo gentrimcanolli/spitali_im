@@ -7,7 +7,11 @@ import 'package:spitali_im/ui/login/login.dart';
 
 import '../../constants/fonts.dart';
 
-AppBar primaryAppBar(String title, bool hasAction, BuildContext context) {
+AppBar primaryAppBar(
+  String title,
+  bool hasAction,
+  BuildContext context,
+) {
   return AppBar(
     toolbarHeight: 70.0,
     backgroundColor: Colors.white,
@@ -20,11 +24,23 @@ AppBar primaryAppBar(String title, bool hasAction, BuildContext context) {
                 size: 30.0,
               ),
               onPressed: () {
-                showAlert(
+                QuickAlert.show(
                     context: context,
+                    title: 'Shkyçu',
+                    text: "Dëshironi të shkyçeni?",
                     type: QuickAlertType.confirm,
-                    message: "Are you sure you want to logout?",
-                    confirmType: true);
+                    confirmBtnText: "Po",
+                    cancelBtnText: "Jo",
+                    onConfirmBtnTap: () {
+                      Navigator.pop(context);
+                    }).then(
+                  (value) => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (ctx) => LoginScreen(),
+                    ),
+                  ),
+                );
               },
             ),
           ]
@@ -392,37 +408,5 @@ showDescription(String details) {
     );
   } else {
     return const SizedBox();
-  }
-}
-
-showAlert({
-  required BuildContext context,
-  required QuickAlertType type,
-  required String message,
-  required bool confirmType,
-}) {
-  if (confirmType) {
-    QuickAlert.show(
-      context: context,
-      type: type,
-      text: message,
-      confirmBtnText: "Yes",
-      cancelBtnText: "Cancel",
-      confirmBtnColor: mainBlueColor(),
-      onConfirmBtnTap: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (ctx) => const LoginScreen(),
-          ),
-        );
-      },
-    );
-  } else {
-    QuickAlert.show(
-      context: context,
-      type: type,
-      text: message,
-    );
   }
 }

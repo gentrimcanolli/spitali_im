@@ -78,7 +78,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
         ),
       );
     } catch (e) {
-      print(e.toString());
+      throw Exception(e.toString());
     }
   }
 }

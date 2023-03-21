@@ -1,9 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.spitali_im">
    <application
-        android:label="spitali_im"
-        android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Spitali im"
+        android:icon="@drawable/spitali_im_logo">
 
         <activity
             android:name=".MainActivity"

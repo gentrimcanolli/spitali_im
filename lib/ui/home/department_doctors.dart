@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:spitali_im/data/database/db_helper.dart';
 import 'package:spitali_im/data/models/doctor_model.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import 'package:spitali_im/ui/doctors/doctor_details.dart';
+import '../../data/database/department_helper.dart';
 
 class DepartmentDoctorsScreen extends StatefulWidget {
   String departmentId;
@@ -14,13 +14,13 @@ class DepartmentDoctorsScreen extends StatefulWidget {
 }
 
 class _DepartmentDoctorsScreenState extends State<DepartmentDoctorsScreen> {
-  DBHelper dbHelper = DBHelper();
+  DepartmentHelper departmentHelper = DepartmentHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: secondaryAppBar("Doktorët", context),
       body: FutureBuilder(
-        future: dbHelper.getDepartmentDoctorList(widget.departmentId),
+        future: departmentHelper.getDepartmentDoctorList(widget.departmentId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {

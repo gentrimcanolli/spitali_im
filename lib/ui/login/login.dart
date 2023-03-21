@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
-import 'package:spitali_im/data/database/db_helper.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:spitali_im/data/models/user_model.dart';
-import 'package:spitali_im/ui/home/home.dart';
 import 'package:spitali_im/ui/navigation/nav.dart';
 import 'package:spitali_im/ui/register/register.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
+import '../../data/database/login_helper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  DBHelper dbHelper = DBHelper();
+  LoginHelper loginHelper = LoginHelper();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _personalNoController = TextEditingController();
 
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: () async {
                 String hashPassword = UserModel.generateSaltedHashPassword(
                     _passwordController.text.toString());
-                bool success = await dbHelper.loginUser(
+                bool success = await loginHelper.loginUser(
                   _personalNoController.text.toString(),
                   hashPassword,
                 );
@@ -73,18 +73,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   } else if (_passwordController.text.isEmpty ||
                       _personalNoController.text.isEmpty) {
-                    showAlert(
+                    QuickAlert.show(
                       context: context,
+                      title: "Kyçu",
+                      text: "Ju lutem plotësoni të gjitha të dhënat!",
                       type: QuickAlertType.error,
-                      message: "All fields are required!",
-                      confirmType: false,
                     );
                   } else {
-                    showAlert(
-                        context: context,
-                        type: QuickAlertType.error,
-                        message: "Wrong credentials!",
-                        confirmType: false);
+                    QuickAlert.show(
+                      context: context,
+                      title: "Kyçu",
+                      text: "Kredencialet janë gabim!",
+                      type: QuickAlertType.error,
+                    );
                   }
                 });
               },

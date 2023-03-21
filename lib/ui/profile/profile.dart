@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:spitali_im/data/database/db_helper.dart';
 import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/profile/complaint.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+
+import '../../data/database/profile_helper.dart';
 
 class ProfileScreen extends StatefulWidget {
   String personalNo = '';
@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _personalNoController = TextEditingController();
-  DBHelper dbHelper = DBHelper();
+  ProfileHelper profileHelper = ProfileHelper();
   late UserModel userModel;
 
   @override
@@ -29,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: primaryAppBar("Profili", true, context),
       body: Center(
         child: FutureBuilder(
-            future: dbHelper.getUserProfile(widget.personalNo),
+            future: profileHelper.getUserProfile(widget.personalNo),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       primaryButton(
                         text: "Përditëso profilin",
                         onTap: () async {
-                          await dbHelper.changePassword(
+                          await profileHelper.changePassword(
                             userModel.personalNo,
                             UserModel.generateSaltedHashPassword(
                               _passwordController.text.toString(),
