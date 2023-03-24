@@ -14,7 +14,6 @@ class ProfileHelper {
       personalNo: snapshot.docs[0]['personalNo'],
       telephoneNo: snapshot.docs[0]['telephoneNo'],
       email: snapshot.docs[0]['email'],
-      password: "",
     );
   }
 

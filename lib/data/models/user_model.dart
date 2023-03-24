@@ -6,7 +6,6 @@ class UserModel {
   String personalNo;
   String telephoneNo;
   String email;
-  String password;
 
   UserModel({
     required this.name,
@@ -14,7 +13,6 @@ class UserModel {
     required this.personalNo,
     required this.telephoneNo,
     required this.email,
-    required this.password,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,12 +22,6 @@ class UserModel {
       'personalNo': personalNo,
       'telephoneNo': telephoneNo,
       'email': email,
-      'password': generateSaltedHashPassword(password),
     };
-  }
-
-  static generateSaltedHashPassword(String password) {
-    final saltedHash = Crypt.sha256(password, salt: "abcdefghijklmnop");
-    return saltedHash.toString();
   }
 }

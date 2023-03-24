@@ -36,84 +36,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   snapshot.hasData) {
                 userModel = snapshot.data!;
 
-                return Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      profileTextView(
-                        text: "Emri",
-                        isPassword: false,
-                        controller: _controller,
-                        isEnabled: false,
-                        labelText: "${userModel.name} ${userModel.surname}",
-                      ),
-                      profileTextView(
-                        text: "Nr. personal",
-                        isPassword: false,
-                        controller: _personalNoController,
-                        isEnabled: false,
-                        labelText: userModel.personalNo,
-                      ),
-                      profileTextView(
-                        text: "Email",
-                        isPassword: false,
-                        controller: _controller,
-                        isEnabled: false,
-                        labelText: userModel.email,
-                      ),
-                      profileTextView(
-                        text: "Fjalëkalimi",
-                        isPassword: true,
-                        controller: _passwordController,
-                        isEnabled: true,
-                      ),
-                      primaryButton(
-                        text: "Përditëso profilin",
-                        onTap: () {
-                          QuickAlert.show(
-                              context: context,
-                              title: "Përditëso profilin",
-                              text: "A dëshironi të përditësoni profilin?",
-                              type: QuickAlertType.confirm,
-                              confirmBtnText: "Po",
-                              cancelBtnText: "Jo",
-                              onConfirmBtnTap: () async {
-                                await profileHelper
-                                    .changePassword(
-                                  userModel.personalNo,
-                                  UserModel.generateSaltedHashPassword(
-                                    _passwordController.text.toString(),
-                                  ),
-                                )
-                                    .then((value) {
-                                  Navigator.pop(context);
-                                  QuickAlert.show(
-                                    context: context,
-                                    type: QuickAlertType.success,
-                                    title: "Përditësimi i profilit",
-                                    text:
-                                        "Keni ndryshuar me sukses fjalëkalimin!",
-                                  );
-                                });
-                              });
-                        },
-                      ),
-                      const SizedBox(height: 20.0),
-                      secondaryButton(
-                          text: "Ankesë",
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        profileTextView(
+                          text: "Emri",
+                          isPassword: false,
+                          controller: _controller,
+                          isEnabled: false,
+                          labelText: "${userModel.name} ${userModel.surname}",
+                        ),
+                        profileTextView(
+                          text: "Nr. personal",
+                          isPassword: false,
+                          controller: _personalNoController,
+                          isEnabled: false,
+                          labelText: userModel.personalNo,
+                        ),
+                        profileTextView(
+                          text: "Email",
+                          isPassword: false,
+                          controller: _controller,
+                          isEnabled: false,
+                          labelText: userModel.email,
+                        ),
+                        profileTextView(
+                          text: "Fjalëkalimi",
+                          isPassword: true,
+                          controller: _passwordController,
+                          isEnabled: true,
+                        ),
+                        primaryButton(
+                          text: "Përditëso profilin",
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (ctx) => ComplaintScreen(
-                                  name: userModel.name,
-                                  personalNo: userModel.personalNo,
-                                  email: userModel.email,
+                            QuickAlert.show(
+                                context: context,
+                                title: "Përditëso profilin",
+                                text: "A dëshironi të përditësoni profilin?",
+                                type: QuickAlertType.confirm,
+                                confirmBtnText: "Po",
+                                cancelBtnText: "Jo",
+                                onConfirmBtnTap: () async {
+
+                                });
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        secondaryButton(
+                            text: "Ankesë",
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (ctx) => ComplaintScreen(
+                                    name: userModel.name,
+                                    personalNo: userModel.personalNo,
+                                    email: userModel.email,
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
-                    ],
+                              );
+                            }),
+                      ],
+                    ),
                   ),
                 );
               } else {

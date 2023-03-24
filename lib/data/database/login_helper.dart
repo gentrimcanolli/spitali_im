@@ -1,23 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:quickalert/quickalert.dart';
 
 class LoginHelper {
   final userCollection = FirebaseFirestore.instance.collection('users');
-  Future loginUser(String personalNo, String password) async {
-    QuerySnapshot snapshot =
-        await userCollection.where('personalNo', isEqualTo: personalNo).get();
 
-    if (snapshot.docs.isEmpty) {
-      return false;
+  Future loginUser(BuildContext context, String personalNo, String password) async{
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: "$personalNo@gmail.com", password: password);
+    } on FirebaseAuthException catch(e){
+      if(e.code == 'user-not-found'){
+        QuickAlert.show(context: context, type: QuickAlertType.error,
+        title: "Provo perseri!", text: "Perdoruesi nuk ekziston.",
+        );
+      } else if (e.code == 'wrong-password'){
+        QuickAlert.show(context: context, type: QuickAlertType.error,
+          title: "Provo perseri!", text: "Kredencialet jane gabim.",
+        );
+      }
     }
 
-    DocumentSnapshot userDocument = snapshot.docs.first;
-    Map<String, dynamic> userData = userDocument.data() as Map<String, dynamic>;
-    String storedPassword = userData['password'];
-
-    if (password == storedPassword) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }
