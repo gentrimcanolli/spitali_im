@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+
 import '../../data/database/register_helper.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   RegisterHelper registerHelper = RegisterHelper();
-
+  late UserModel userModel;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
   final TextEditingController _personalNoController = TextEditingController();
@@ -56,54 +56,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 20.0,
               ),
               primaryButton(
-                text: "Regjistrohu",
-                onTap: () async {
-                  bool result = await registerHelper.userExists(
-                      _personalNoController.text.toString(),
-                      _emailController.text.toString(),
-                  _telNoController.text.toString());
+                  text: "Regjistrohu",
+                  onTap: () async {
+                    setState(() {
+                      userModel = UserModel(
+                        name: _nameController.text.toString(),
+                        surname: _surnameController.text.toString(),
+                        personalNo: _personalNoController.text.toString(),
+                        telephoneNo: _telNoController.text.toString(),
+                        email: _emailController.text.toString(),
+                      );
+                    });
 
-                  if (!result) {
-                    UserModel userModel = UserModel(
-                      name: _nameController.text.toString(),
-                      surname: _surnameController.text.toString(),
-                      personalNo: _personalNoController.text.toString(),
-                      telephoneNo: _telNoController.text.toString(),
-                      email: _emailController.text.toString(),
-                    );
-
-                    registerHelper.registerUser(userModel, _passwordController.text.toString());
-
-                    QuickAlert.show(
-                        context: context,
-                        title: 'Regjistrohu',
-                        text: 'Jeni regjistruar me sukses',
-                        type: QuickAlertType.success,
-                        confirmBtnText: "Në rregull");
-                  } else if (_nameController.text.toString().isEmpty ||
-                      _surnameController.text.toString().isEmpty ||
-                      _personalNoController.text.toString().isEmpty ||
-                      _telNoController.text.toString().isEmpty ||
-                      _emailController.text.toString().isEmpty ||
-                      _passwordController.text.toString().isEmpty) {
-                    QuickAlert.show(
-                      context: context,
-                      type: QuickAlertType.error,
-                      text: "Ju lutem plotësoni të gjitha të dhënat!",
-                      title: 'Regjistrohu',
-                      confirmBtnText: "Në rregull",
-                    );
-                  } else {
-                    QuickAlert.show(
-                      context: context,
-                      type: QuickAlertType.error,
-                      title: 'Regjistrohu',
-                      text: "Ky përdorues ekziston!",
-                      confirmBtnText: "Në rregull",
-                    );
-                  }
-                },
-              ),
+                    await registerHelper
+                        .registerUser(context, userModel,
+                            _passwordController.text.toString())
+                        .then((value) {
+                      QuickAlert.show(
+                          context: context,
+                          type: QuickAlertType.success,
+                          title: "Sukses!",
+                          text: "Jeni regjistruar me sukses",
+                          onConfirmBtnTap: () {
+                            Navigator.pop(context);
+                          }).then(
+                        (value) => Navigator.pop(context),
+                      );
+                    });
+                  }),
             ],
           ),
         ),

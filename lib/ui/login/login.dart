@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spitali_im/ui/navigation/nav.dart';
 import 'package:spitali_im/ui/register/register.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
 import '../../data/database/login_helper.dart';
@@ -44,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 20.0),
               SizedBox(
                 height: 50.0,
-                child: primaryTextField("Fjalëkalimi", true, _passwordController),
+                child:
+                    primaryTextField("Fjalëkalimi", true, _passwordController),
               ),
               const SizedBox(
                 height: 25.0,
@@ -52,10 +54,21 @@ class _LoginScreenState extends State<LoginScreen> {
               primaryButton(
                 text: "Kyçu",
                 onTap: () async {
-                  bool success = await loginHelper.loginUser(context, _personalNoController.text.toString(), _passwordController.text.toString(),);
-                    if(success){
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (ctx) => MainNavigation(personalNo: _personalNoController.text.toString(),),),);
-                    }
+                  bool success = await loginHelper.loginUser(
+                    context,
+                    _personalNoController.text.toString(),
+                    _passwordController.text.toString(),
+                  );
+                  if (success) {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => MainNavigation(
+                          personalNo: _personalNoController.text.toString(),
+                        ),
+                      ),
+                    );
+                  }
                 },
               ),
               const SizedBox(
