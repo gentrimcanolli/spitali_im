@@ -1,4 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:spitali_im/ui/login/login.dart';
+
 import '../models/user_model.dart';
 
 class ProfileHelper {
@@ -17,16 +23,25 @@ class ProfileHelper {
     );
   }
 
-  Future changePassword(String personalNo, String newPassword) async {
-    final snapshot =
-        await userCollection.where('personalNo', isEqualTo: personalNo).get();
+  Future changePassword(BuildContext context, String newPassword) async {
+    final user = FirebaseAuth.instance.currentUser;
 
-    if (snapshot.docs.isNotEmpty) {
-      final userDoc = snapshot.docs.first;
-      final userData = userDoc.data();
-      userData['password'] = newPassword;
-
-      await userDoc.reference.set(userData);
-    }
+    await user?.updatePassword(newPassword).then((_) {
+      QuickAlert.show(
+              context: context,
+              type: QuickAlertType.success,
+              title: "Fjalekalimi",
+              text:
+                  "Fjalekalimi ka ndryshuar me sukses, ju do  te ktheheni ne faqen per kycje!",
+              confirmBtnText: "Ne rregull")
+          .then((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (ctx) => LoginScreen(),
+          ),
+        );
+      });
+    });
   }
 }

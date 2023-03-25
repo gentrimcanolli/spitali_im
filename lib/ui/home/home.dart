@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Ballina", false, context),
+      appBar: primaryAppBar("Ballina"),
       body: Center(
         child: Column(
           children: [

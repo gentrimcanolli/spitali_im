@@ -1,50 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/constants/colors.dart';
-import 'package:spitali_im/ui/login/login.dart';
 
 import '../../constants/fonts.dart';
 
 AppBar primaryAppBar(
   String title,
-  bool hasAction,
-  BuildContext context,
 ) {
   return AppBar(
     toolbarHeight: 70.0,
     backgroundColor: Colors.white,
-    actions: (hasAction)
-        ? [
-            IconButton(
-              icon: Icon(
-                Icons.logout,
-                color: mainBlueColor(),
-                size: 30.0,
-              ),
-              onPressed: () {
-                QuickAlert.show(
-                    context: context,
-                    title: 'Shkyçu',
-                    text: "Dëshironi të shkyçeni?",
-                    type: QuickAlertType.confirm,
-                    confirmBtnText: "Po",
-                    cancelBtnText: "Jo",
-                    onConfirmBtnTap: () {
-                      Navigator.pop(context);
-                    }).then(
-                  (value) => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (ctx) => LoginScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ]
-        : null,
     title: Text(
       title,
       style: TextStyle(

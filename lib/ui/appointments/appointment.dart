@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/ui/appointments/appointment_reservation.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
 import '../../data/database/appointment_helper.dart';
@@ -24,7 +25,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Terminet", false, context),
+      appBar: primaryAppBar("Terminet"),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

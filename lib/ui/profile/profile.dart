@@ -3,8 +3,12 @@ import 'package:quickalert/quickalert.dart';
 import 'package:spitali_im/data/models/user_model.dart';
 import 'package:spitali_im/ui/profile/complaint.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+import 'package:spitali_im/utils/password_validation.dart';
 
+import '../../constants/colors.dart';
+import '../../constants/fonts.dart';
 import '../../data/database/profile_helper.dart';
+import '../login/login.dart';
 
 class ProfileScreen extends StatefulWidget {
   String personalNo = '';
@@ -27,7 +31,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Profili", true, context),
+      appBar: AppBar(
+        toolbarHeight: 70.0,
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.logout,
+              color: mainBlueColor(),
+              size: 30.0,
+            ),
+            onPressed: () {
+              QuickAlert.show(
+                  context: context,
+                  title: 'Shkyçu',
+                  text: "Dëshironi të shkyçeni?",
+                  type: QuickAlertType.confirm,
+                  confirmBtnText: "Po",
+                  cancelBtnText: "Jo",
+                  onCancelBtnTap: () {
+                    Navigator.pop(context);
+                  },
+                  onConfirmBtnTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (ctx) => LoginScreen(),
+                      ),
+                    );
+                  });
+            },
+          ),
+        ],
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            color: mainBlueColor(),
+            fontFamily: kRoboto,
+          ),
+        ),
+      ),
       body: Center(
         child: FutureBuilder(
             future: profileHelper.getUserProfile(widget.personalNo),
@@ -70,17 +115,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         primaryButton(
                           text: "Përditëso profilin",
-                          onTap: () {
-                            QuickAlert.show(
+                          onTap: () async {
+                            bool passwordValid = passwordValidation(
+                                _passwordController.text.toString());
+                            if (passwordValid) {
+                              profileHelper
+                                  .changePassword(
+                                    context,
+                                    _passwordController.text.toString(),
+                                  )
+                                  .then(
+                                    (value) => _passwordController.clear(),
+                                  );
+                            } else {
+                              QuickAlert.show(
                                 context: context,
-                                title: "Përditëso profilin",
-                                text: "A dëshironi të përditësoni profilin?",
-                                type: QuickAlertType.confirm,
-                                confirmBtnText: "Po",
-                                cancelBtnText: "Jo",
-                                onConfirmBtnTap: () async {
-
-                                });
+                                type: QuickAlertType.error,
+                                title: "Provoni perseri",
+                                text:
+                                    "Fjalekalimi duhet te kete 8 karatere dhe te permbaj te pakten nje shkronje te madhe, nje numer dhe nje simbol.",
+                                confirmBtnText: "Ne rregull",
+                              );
+                            }
                           },
                         ),
                         const SizedBox(height: 20.0),

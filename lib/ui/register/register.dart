@@ -67,15 +67,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               primaryButton(
                   text: "Regjistrohu",
                   onTap: () async {
-                    setState(() {
-                      userModel = UserModel(
-                        name: _nameController.text.toString(),
-                        surname: _surnameController.text.toString(),
-                        personalNo: _personalNoController.text.toString(),
-                        telephoneNo: _telNoController.text.toString(),
-                        email: _emailController.text.toString(),
-                      );
-                    });
+                    userModel = UserModel(
+                      name: _nameController.text.toString(),
+                      surname: _surnameController.text.toString(),
+                      personalNo: _personalNoController.text.toString(),
+                      telephoneNo: _telNoController.text.toString(),
+                      email: _emailController.text.toString(),
+                    );
 
                     if (validInfo()) {
                       await registerHelper

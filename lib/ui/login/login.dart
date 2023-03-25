@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spitali_im/ui/navigation/nav.dart';
 import 'package:spitali_im/ui/register/register.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
+
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
 import '../../data/database/login_helper.dart';
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Kyçu", false, context),
+      appBar: primaryAppBar("Kyçu"),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 30.0, top: 50.0, right: 30.0),

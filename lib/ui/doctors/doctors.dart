@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spitali_im/ui/doctors/doctor_details.dart';
+
 import '../../data/database/doctor_helper.dart';
 import '../../data/models/doctor_model.dart';
 import '../reusable_widgets/reusable_widgets.dart';
@@ -17,7 +18,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: primaryAppBar("Doktorët", false, context),
+      appBar: primaryAppBar("Doktorët"),
       body: FutureBuilder(
         future: doctorHelper.getDoctorList(),
         builder: (context, snapshot) {
