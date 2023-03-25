@@ -86,14 +86,21 @@ AppBar secondaryAppBar(String title, BuildContext context) {
 }
 
 TextField primaryTextField(
-    String labelText, bool isPassword, TextEditingController controller) {
+    String labelText,
+    bool isPassword,
+    TextEditingController controller,
+    TextInputType keyboardType,
+    int maxLength) {
   return TextField(
     controller: controller,
     obscureText: isPassword,
+    keyboardType: keyboardType,
+    maxLength: maxLength,
     decoration: InputDecoration(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
+      counterText: "",
       labelText: labelText,
     ),
   );
@@ -107,6 +114,12 @@ Container primaryButton({required String text, required Function onTap}) {
       onPressed: () {
         onTap();
       },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: mainBlueColor(),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
       child: Text(
         text,
         style: TextStyle(
@@ -114,12 +127,6 @@ Container primaryButton({required String text, required Function onTap}) {
           fontFamily: kRoboto,
           fontWeight: FontWeight.w400,
           fontSize: 20.0,
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: mainBlueColor(),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
         ),
       ),
     ),
@@ -134,6 +141,12 @@ Container secondaryButton({required String text, required Function onTap}) {
       onPressed: () {
         onTap();
       },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
       child: Text(
         text,
         style: TextStyle(
@@ -141,12 +154,6 @@ Container secondaryButton({required String text, required Function onTap}) {
           fontFamily: kRoboto,
           fontWeight: FontWeight.w400,
           fontSize: 20.0,
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
         ),
       ),
     ),

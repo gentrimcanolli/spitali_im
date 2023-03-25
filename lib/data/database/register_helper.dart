@@ -22,17 +22,6 @@ class RegisterHelper {
           title: "Provo perseri!",
           text: "Ky perdorues ekziston!",
         );
-      } else if (userModel.personalNo.isEmpty ||
-          userModel.telephoneNo.isEmpty ||
-          userModel.email.isEmpty ||
-          userModel.name.isEmpty ||
-          userModel.surname.isEmpty) {
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.error,
-          title: "Provo perseri!",
-          text: "Plotesoni te gjitha fushat!",
-        );
       }
     }
   }
