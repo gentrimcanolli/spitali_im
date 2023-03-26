@@ -8,7 +8,6 @@ import 'package:spitali_im/utils/password_validation.dart';
 import '../../constants/colors.dart';
 import '../../constants/fonts.dart';
 import '../../data/database/profile_helper.dart';
-import '../login/login.dart';
 
 class ProfileScreen extends StatefulWidget {
   String personalNo = '';
@@ -41,26 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: mainBlueColor(),
               size: 30.0,
             ),
-            onPressed: () {
-              QuickAlert.show(
-                  context: context,
-                  title: 'Shkyçu',
-                  text: "Dëshironi të shkyçeni?",
-                  type: QuickAlertType.confirm,
-                  confirmBtnText: "Po",
-                  cancelBtnText: "Jo",
-                  onCancelBtnTap: () {
-                    Navigator.pop(context);
-                  },
-                  onConfirmBtnTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => LoginScreen(),
-                      ),
-                    );
-                  });
-            },
+            onPressed: () {},
           ),
         ],
         title: Text(

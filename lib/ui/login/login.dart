@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:spitali_im/ui/navigation/nav.dart';
 import 'package:spitali_im/ui/register/register.dart';
 import 'package:spitali_im/ui/reusable_widgets/reusable_widgets.dart';
 
@@ -40,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 50.0,
                 child: primaryTextField("Nr. personal", false,
-                    _personalNoController, TextInputType.number, 20),
+                    _personalNoController, TextInputType.number, 10),
               ),
               const SizedBox(height: 20.0),
               SizedBox(
@@ -54,22 +53,21 @@ class _LoginScreenState extends State<LoginScreen> {
               primaryButton(
                 text: "Kyçu",
                 onTap: () async {
-                  await loginHelper
-                      .loginUser(
+                  await loginHelper.loginUser(
                     context,
                     _personalNoController.text.toString(),
                     _passwordController.text.toString(),
-                  )
-                      .then((value) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (ctx) => MainNavigation(
-                          personalNo: _personalNoController.text.toString(),
-                        ),
-                      ),
-                    );
-                  });
+                  );
+                  //   .then((value) {
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (ctx) => MainNavigation(
+                  //       personalNo: _personalNoController.text.toString(),
+                  //     ),
+                  //   ),
+                  // );
+                  // });
                 },
               ),
               const SizedBox(
