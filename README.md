@@ -17,7 +17,6 @@ To run the app, you will need to have Flutter installed on your machine. Clone t
 - firebase_auth: ^4.2.10
 - firebase_database: ^10.0.15
 - cloud_firestore: ^4.4.4
-- crypt: ^4.2.1
 - quickalert: ^1.0.1
 - flutter_email_sender: ^5.2.0
 ## Configuration
